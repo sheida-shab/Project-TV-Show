@@ -1,3 +1,15 @@
 #root {
   color: red;
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+}
+.episode-Card {
+  border: 1px solid rgb(175, 156, 156);
+  padding: 10px;
+  border-radius: 10px;
+}
+
+.show-Summary {
+  color: #000;
+ 
 }

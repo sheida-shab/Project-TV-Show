@@ -27,7 +27,7 @@ function makePageForEpisodes(episodeList) {
     const showSeasonNumber = "S" + String(episode.season).padStart(2, "0");
     const showEpisodeNumber =
       "E" + String(episode.number).padStart(2, "0");
-    showSeasonEpisode.textContent = showEpisodeNumber + showSeasonNumber;
+    showSeasonEpisode.textContent = showSeasonNumber + showEpisodeNumber;
     episodeCard.appendChild(showSeasonEpisode);
     showSeasonEpisode.classList.add("show-Season-Episode");
     //create show summary
