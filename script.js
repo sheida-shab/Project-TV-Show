@@ -20,6 +20,7 @@ function makePageForEpisodes(episodeList) {
     //create show image
     const showImage = document.createElement("img");
     showImage.src = episode.image.medium;
+    showImage.alt="TV Show Image"
     episodeCard.appendChild(showImage);
     showImage.classList.add("show-Image");
     //create show season and episode number

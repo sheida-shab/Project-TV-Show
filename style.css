@@ -1,5 +1,7 @@
 #root {
-  color: red;
+  color: #000000;
+  background-color: #ffffff;
+;
   display: grid;
   grid-template-columns: repeat(4, 1fr);
 }
@@ -11,5 +13,5 @@
 
 .show-Summary {
   color: #000;
- 
+ background-color: #f5f5f5;
 }
