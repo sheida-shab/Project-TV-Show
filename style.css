@@ -5,6 +5,13 @@
   display: grid;
   grid-template-columns: repeat(4, 1fr);
 }
+
+.show-Title {
+  border: 1px solid rgb(175, 156, 156);
+  padding: 10px;
+  border-radius: 10px;
+  background-color:  #f5f5f5;
+}
 .episode-Card {
   border: 1px solid rgb(175, 156, 156);
   padding: 10px;

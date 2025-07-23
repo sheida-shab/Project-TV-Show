@@ -9,21 +9,21 @@ function makePageForEpisodes(episodeList) {
   
   //rootElem.textContent = "Popular TV Shows";
   episodeList.forEach((episode) => {
+    
     //create episode card
     const episodeCard = document.createElement("div");
     episodeCard.classList.add("episode-Card");
+    
     //create show season and episode number
-    const showSeasonEpisode = document.createElement("h3");
     const showSeasonNumber = "S" + String(episode.season).padStart(2, "0");
     const showEpisodeNumber = "E" + String(episode.number).padStart(2, "0");
-    //showSeasonEpisode.textContent = showSeasonNumber + showEpisodeNumber;
-    //episodeCard.appendChild(showSeasonEpisode);
-    //showSeasonEpisode.classList.add("show-Season-Episode");
+      
     //create show title
     const showTitle = document.createElement("h2");
     showTitle.textContent = `${episode.name} - ${showSeasonNumber}${showEpisodeNumber}`;
     episodeCard.appendChild(showTitle);
     showTitle.classList.add("show-Title");
+    
     //create show image
     const showImage = document.createElement("img");
     showImage.src = episode.image.medium;
@@ -36,6 +36,7 @@ function makePageForEpisodes(episodeList) {
     showSummary.innerHTML = `<strong>The summary is : </strong>${episode.summary}`;
     episodeCard.appendChild(showSummary);
     showSummary.classList.add("show-Summary");
+    
     //create show original link
     const showLink = document.createElement("a");
     showLink.textContent = `for mre information visit "tvmaze.com"`;
