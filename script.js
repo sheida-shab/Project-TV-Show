@@ -38,12 +38,12 @@ function makePageForEpisodes(episodeList) {
     episodeSummary.classList.add("show-Summary");
     
     //create show original link
-    const showLink = document.createElement("a");
-    showLink.textContent = `for mre information visit "tvmaze.com"`;
-    showLink.target = "_blank";
-    showLink.href = episode.url;
-    showLink.classList.add("show-Link");
-    episodeCard.appendChild(showLink);
+    const episodeLink = document.createElement("a");
+    episodeLink.textContent = `for mre information visit "tvmaze.com"`;
+    episodeLink.target = "_blank";
+    episodeLink.href = episode.url;
+    episodeLink.classList.add("show-Link");
+    episodeCard.appendChild(episodeLink);
 
     rootElem.appendChild(episodeCard);
   });
