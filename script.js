@@ -19,23 +19,23 @@ function makePageForEpisodes(episodeList) {
     const episodeNumber = "E" + String(episode.number).padStart(2, "0");
       
     //create show title
-    const showTitle = document.createElement("h2");
-    showTitle.textContent = `${episode.name} - ${seasonNumber}${episodeNumber}`;
-    episodeCard.appendChild(showTitle);
-    showTitle.classList.add("show-Title");
+    const episodeTitle = document.createElement("h2");
+    episodeTitle.textContent = `${episode.name} - ${seasonNumber}${episodeNumber}`;
+    episodeCard.appendChild(episodeTitle);
+    episodeTitle.classList.add("show-Title");
     
     //create show image
-    const showImage = document.createElement("img");
-    showImage.src = episode.image.medium;
-    showImage.alt = "TV Show Image";
-    episodeCard.appendChild(showImage);
-    showImage.classList.add("show-Image");
+    const episodeImage = document.createElement("img");
+    episodeImage.src = episode.image.medium;
+    episodeImage.alt = "TV Show Image";
+    episodeCard.appendChild(episodeImage);
+    episodeImage.classList.add("show-Image");
 
     //create show summary
-    const showSummary = document.createElement("div");
-    showSummary.innerHTML = `<strong>The summary is : </strong>${episode.summary}`;
-    episodeCard.appendChild(showSummary);
-    showSummary.classList.add("show-Summary");
+    const episodeSummary = document.createElement("div");
+    episodeSummary.innerHTML = `<strong>The summary is : </strong>${episode.summary}`;
+    episodeCard.appendChild(episodeSummary);
+    episodeSummary.classList.add("show-Summary");
     
     //create show original link
     const showLink = document.createElement("a");
