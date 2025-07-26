@@ -1,15 +1,31 @@
 //You can edit ALL of the code here
-function setup() {
-  const allEpisodes = getAllEpisodes();
-  makePageForEpisodes(allEpisodes);
-}
 const searchBar = document.createElement("input");
 searchBar.placeholder = "Find an episode";
 document.body.insertBefore(searchBar, document.body.firstChild);
 
 
+function setup() {
+  const allEpisodes = getAllEpisodes();
+  makePageForEpisodes(allEpisodes);
+
+
+  searchBar.addEventListener("input", function () {
+    const searchTerm = searchBar.value.toLowerCase();
+    const matchingEpisodes = allEpisodes.filter((episode) => {
+      const name = episode.name.toLowerCase();
+      const summary = episode.summary.toLowerCase();
+      return name.includes(searchTerm) || summary.includes(searchTerm);
+    });
+
+    makePageForEpisodes(matchingEpisodes);
+  });
+  
+}
+
 function makePageForEpisodes(episodeList) {
   const rootElem = document.getElementById("root");
+  rootElem.innerHTML = "";
+  
   
   //rootElem.textContent = "Popular TV Shows";
   episodeList.forEach((episode) => {
@@ -51,7 +67,7 @@ function makePageForEpisodes(episodeList) {
 
     rootElem.appendChild(episodeCard);
   });
-  
+
 }
 
 window.onload = setup;
