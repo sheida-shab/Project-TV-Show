@@ -3,6 +3,10 @@ function setup() {
   const allEpisodes = getAllEpisodes();
   makePageForEpisodes(allEpisodes);
 }
+const searchBar = document.createElement("input");
+searchBar.placeholder = "Find an episode";
+document.body.insertBefore(searchBar, document.body.firstChild);
+
 
 function makePageForEpisodes(episodeList) {
   const rootElem = document.getElementById("root");
