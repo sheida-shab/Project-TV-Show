@@ -15,8 +15,8 @@ function makePageForEpisodes(episodeList) {
     episodeCard.classList.add("episode-Card");
     
     //create show season and episode number
-    const showSeasonNumber = "S" + String(episode.season).padStart(2, "0");
-    const showEpisodeNumber = "E" + String(episode.number).padStart(2, "0");
+    const seasonNumber = "S" + String(episode.season).padStart(2, "0");
+    const episodeNumber = "E" + String(episode.number).padStart(2, "0");
       
     //create show title
     const showTitle = document.createElement("h2");
