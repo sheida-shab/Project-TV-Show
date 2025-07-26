@@ -20,7 +20,7 @@ function makePageForEpisodes(episodeList) {
       
     //create show title
     const showTitle = document.createElement("h2");
-    showTitle.textContent = `${episode.name} - ${showSeasonNumber}${showEpisodeNumber}`;
+    showTitle.textContent = `${episode.name} - ${seasonNumber}${episodeNumber}`;
     episodeCard.appendChild(showTitle);
     showTitle.classList.add("show-Title");
     
