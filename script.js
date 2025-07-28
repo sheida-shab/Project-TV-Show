@@ -3,6 +3,10 @@ const searchBar = document.createElement("input");
 searchBar.placeholder = "Find an episode";
 document.body.insertBefore(searchBar, document.body.firstChild);
 
+const episodeCountDisplay = document.createElement("p");
+document.body.insertBefore(episodeCountDisplay, searchBar.nextSibling);
+
+
 
 function setup() {
   const allEpisodes = getAllEpisodes();
@@ -16,6 +20,8 @@ function setup() {
       const summary = episode.summary.toLowerCase();
       return name.includes(searchTerm) || summary.includes(searchTerm);
     });
+
+    episodeCountDisplay.textContent = `Displaying ${matchingEpisodes.length}/${allEpisodes.length} episodes.`;
 
     makePageForEpisodes(matchingEpisodes);
   });
