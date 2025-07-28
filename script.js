@@ -1,7 +1,28 @@
 //You can edit ALL of the code here
+const allEpisodes = getAllEpisodes();
+const selector = document.createElement("select");
+
+allEpisodes.forEach((episode) => {
+  const option = document.createElement("option");
+
+  //create show season and episode number
+  const seasonNumber = "S" + String(episode.season).padStart(2, "0");
+  const episodeNumber = "E" + String(episode.number).padStart(2, "0");
+  const code = `${seasonNumber}${episodeNumber}`;
+
+  option.textContent = `${code} - ${episode.name}`;
+  option.value = code;
+
+  selector.appendChild(option);
+  
+});
+
+document.body.insertBefore(selector, document.body.firstChild);
+
+
 const searchBar = document.createElement("input");
 searchBar.placeholder = "Find an episode";
-document.body.insertBefore(searchBar, document.body.firstChild);
+document.body.insertBefore(searchBar, selector.nextSibling);
 
 const episodeCountDisplay = document.createElement("p");
 document.body.insertBefore(episodeCountDisplay, searchBar.nextSibling);
@@ -9,7 +30,6 @@ document.body.insertBefore(episodeCountDisplay, searchBar.nextSibling);
 
 
 function setup() {
-  const allEpisodes = getAllEpisodes();
   makePageForEpisodes(allEpisodes);
 
 
@@ -40,11 +60,11 @@ function makePageForEpisodes(episodeList) {
     const episodeCard = document.createElement("div");
     episodeCard.classList.add("episode-Card");
     
-    //create show season and episode number
-    const seasonNumber = "S" + String(episode.season).padStart(2, "0");
-    const episodeNumber = "E" + String(episode.number).padStart(2, "0");
       
     //create show title
+    const seasonNumber = "S" + String(episode.season).padStart(2, "0");
+    const episodeNumber = "E" + String(episode.number).padStart(2, "0");
+    
     const episodeTitle = document.createElement("h2");
     episodeTitle.textContent = `${episode.name} - ${seasonNumber}${episodeNumber}`;
     episodeCard.appendChild(episodeTitle);
