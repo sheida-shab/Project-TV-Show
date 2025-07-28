@@ -11,7 +11,7 @@ allEpisodes.forEach((episode) => {
   const code = `${seasonNumber}${episodeNumber}`;
 
   option.textContent = `${code} - ${episode.name}`;
-  option.value = code;
+  option.value = episode.url;
 
   selector.appendChild(option);
   
@@ -27,7 +27,12 @@ document.body.insertBefore(searchBar, selector.nextSibling);
 const episodeCountDisplay = document.createElement("p");
 document.body.insertBefore(episodeCountDisplay, searchBar.nextSibling);
 
-
+selector.addEventListener("change", function() {
+  const selectedUrl = selector.value;
+  if (selectedUrl) {
+    window.open(selectedUrl, "_blank");
+  }
+});
 
 function setup() {
   makePageForEpisodes(allEpisodes);
@@ -64,7 +69,7 @@ function makePageForEpisodes(episodeList) {
     //create show title
     const seasonNumber = "S" + String(episode.season).padStart(2, "0");
     const episodeNumber = "E" + String(episode.number).padStart(2, "0");
-    
+
     const episodeTitle = document.createElement("h2");
     episodeTitle.textContent = `${episode.name} - ${seasonNumber}${episodeNumber}`;
     episodeCard.appendChild(episodeTitle);
