@@ -1,29 +1,76 @@
 //You can edit ALL of the code here
 function setup() {
   const allEpisodes = getAllEpisodes();
-  makePageForEpisodes(allEpisodes);
+  displayEpisodes(allEpisodes);
+  //Add Select Items
+  const episodeSelector = document.getElementById("selectEpisode");
+  const allOptions = document.createElement("option");
+  allOptions.textContent = "Show All Episodes";
+  allOptions.value = "All";
+  episodeSelector.insertBefore(allOptions, episodeSelector.firstChild);
+
+  allEpisodes.forEach((episode) => {
+    const episodeCode =
+      "S" +
+      String(episode.season).padStart(2, "0") +
+      "E" +
+      String(episode.number).padStart(2, "0") +
+      "- ";
+    const selectorDisplayText = episodeCode + episode.name;
+    const episodeOption = document.createElement("option");
+    episodeOption.textContent = selectorDisplayText;
+    episodeOption.value = episode.id;
+    episodeSelector.appendChild(episodeOption);
+  });
+  episodeSelector.addEventListener("change", (event) => {
+    const selectedValue = event.target.value;
+    if (selectedValue === "All") {
+      displayEpisodes(allEpisodes);
+    } else {
+      const selectedEpisode = allEpisodes.find(
+        (episode) => episode.id === Number(selectedValue)
+      );
+
+      if (selectedEpisode) {
+        displayEpisodes([selectedEpisode]);
+      }
+    }
+  });
+  //live Search Filtering
+  const searchBox = document.getElementById("searchInput");
+  searchBox.addEventListener("input", function () {
+    const searchItem = searchBox.value.toLowerCase();
+    const filteredEpisodes = allEpisodes.filter((episode) => {
+      const episodeName = episode.name.toLowerCase();
+      const episodeSummaryText = episode.summary.toLowerCase();
+      return (
+        episodeName.includes(searchItem) ||
+        episodeSummaryText.includes(searchItem)
+      );
+    });
+    displayEpisodes(filteredEpisodes);
+  });
 }
 
-function makePageForEpisodes(episodeList) {
+function displayEpisodes(episodeList) {
   const rootElem = document.getElementById("root");
-  
+  rootElem.innerHTML = "";
   //rootElem.textContent = "Popular TV Shows";
   episodeList.forEach((episode) => {
-    
     //create episode card
     const episodeCard = document.createElement("div");
     episodeCard.classList.add("episode-Card");
-    
+
     //create show season and episode number
     const showSeasonNumber = "S" + String(episode.season).padStart(2, "0");
     const showEpisodeNumber = "E" + String(episode.number).padStart(2, "0");
-      
+
     //create show title
     const showTitle = document.createElement("h2");
     showTitle.textContent = `${episode.name} - ${showSeasonNumber}${showEpisodeNumber}`;
     episodeCard.appendChild(showTitle);
     showTitle.classList.add("show-Title");
-    
+
     //create show image
     const showImage = document.createElement("img");
     showImage.src = episode.image.medium;
@@ -36,7 +83,7 @@ function makePageForEpisodes(episodeList) {
     showSummary.innerHTML = `<strong>The summary is : </strong>${episode.summary}`;
     episodeCard.appendChild(showSummary);
     showSummary.classList.add("show-Summary");
-    
+
     //create show original link
     const showLink = document.createElement("a");
     showLink.textContent = `for mre information visit "tvmaze.com"`;
@@ -46,8 +93,9 @@ function makePageForEpisodes(episodeList) {
     episodeCard.appendChild(showLink);
 
     rootElem.appendChild(episodeCard);
+    const resultCount = document.getElementById("resultCount");
+    resultCount.textContent = `Showing ${episodeList.length} Episodes`;
   });
-  
 }
 
 window.onload = setup;
