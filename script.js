@@ -91,8 +91,9 @@ function displayEpisodes(episodeList) {
     showLink.href = episode.url;
     showLink.classList.add("show-Link");
     episodeCard.appendChild(showLink);
-
     rootElem.appendChild(episodeCard);
+
+    //Display Result Count
     const resultCount = document.getElementById("resultCount");
     resultCount.textContent = `Showing ${episodeList.length} Episodes`;
   });
