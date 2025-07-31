@@ -4,15 +4,29 @@ async function setup() {
   //Display a message while loading Data
   const loadingMessage = document.getElementById("loadingMessage");
   loadingMessage.style.display = "block";
+  let allEpisodes = [];
+  try {
+    //Fetch Data from API Instead of  Episodes.json file
+    const response = await fetch("https://api.tvmaze.com/shows/82/episodes");
+    
+    /*simulate an error to test Displaying Error Message
+    const response = await fetch("https://api.tvmaze.com/shows/82/epiiiiiiisodes");*/
 
-  //Fetch Data from API Instead of  Episodes.json file
-  const response = await fetch("https://api.tvmaze.com/shows/82/episodes");
-  const allEpisodes = await response.json();
-  displayEpisodes(allEpisodes);
-  
+    allEpisodes = await response.json();
+    displayEpisodes(allEpisodes);
+  } catch (error) {
+    const errorMessage = document.getElementById("errorMessage");
+    errorMessage.textContent =
+      "An error occurred while fetching data!!!Please Try Again. ";
+    errorMessage.style.display = "block";
+  }
+
   //clear Loading Message
   loadingMessage.style.display = "none";
-
+  if (allEpisodes.length === 0) {
+    // If there is an error and there isn't any data to display
+    return;
+  }
   //Add Select Items
   const episodeSelector = document.getElementById("selectEpisode");
   const allOptions = document.createElement("option");
