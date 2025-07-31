@@ -1,6 +1,5 @@
 //You can edit ALL of the code here
 async function setup() {
-  //const allEpisodes = getAllEpisodes();
   //Display a message while loading Data
   const loadingMessage = document.getElementById("loadingMessage");
   loadingMessage.textContent = "Please Wait! Loading Data .............";
@@ -28,6 +27,7 @@ async function setup() {
     // No data available — exit setup
     return;
   }
+
   //Add Select Items
   const episodeSelector = document.getElementById("selectEpisode");
   const allOptions = document.createElement("option");
@@ -36,13 +36,8 @@ async function setup() {
   episodeSelector.insertBefore(allOptions, episodeSelector.firstChild);
 
   allEpisodes.forEach((episode) => {
-    const episodeCode =
-      "S" +
-      String(episode.season).padStart(2, "0") +
-      "E" +
-      String(episode.number).padStart(2, "0") +
-      "- ";
-    const selectorDisplayText = episodeCode + episode.name;
+    const episodeCode = formatEpisodeCode(episode.season, episode.number);
+    const selectorDisplayText = episodeCode + " - " + episode.name;
     const episodeOption = document.createElement("option");
     episodeOption.textContent = selectorDisplayText;
     episodeOption.value = episode.id;
@@ -62,6 +57,7 @@ async function setup() {
       }
     }
   });
+
   //live Search Filtering
   const searchBox = document.getElementById("searchInput");
   searchBox.addEventListener("input", function () {
@@ -78,6 +74,16 @@ async function setup() {
   });
 }
 
+//create show season and episode number
+function formatEpisodeCode(season, number) {
+  return (
+    "S" +
+    String(season).padStart(2, "0") +
+    "E" +
+    String(number).padStart(2, "0")
+  );
+}
+
 function displayEpisodes(episodeList) {
   const rootElem = document.getElementById("root");
   rootElem.innerHTML = "";
@@ -87,13 +93,12 @@ function displayEpisodes(episodeList) {
     const episodeCard = document.createElement("div");
     episodeCard.classList.add("episode-Card");
 
-    //create show season and episode number
-    const showSeasonNumber = "S" + String(episode.season).padStart(2, "0");
-    const showEpisodeNumber = "E" + String(episode.number).padStart(2, "0");
-
     //create show title
     const showTitle = document.createElement("h2");
-    showTitle.textContent = `${episode.name} - ${showSeasonNumber}${showEpisodeNumber}`;
+    showTitle.textContent = `${episode.name} - ${formatEpisodeCode(
+      episode.season,
+      episode.number
+    )}`;
     episodeCard.appendChild(showTitle);
     showTitle.classList.add("show-Title");
 
