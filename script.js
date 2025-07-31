@@ -92,11 +92,10 @@ function displayEpisodes(episodeList) {
     showLink.classList.add("show-Link");
     episodeCard.appendChild(showLink);
     rootElem.appendChild(episodeCard);
-
-    //Display Result Count
-    const resultCount = document.getElementById("resultCount");
-    resultCount.textContent = `Showing ${episodeList.length} Episodes`;
   });
+  //Display Result Count
+  const resultCount = document.getElementById("resultCount");
+  resultCount.textContent = `Showing ${episodeList.length} Episodes`;
 }
 
 window.onload = setup;
