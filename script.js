@@ -8,7 +8,7 @@ async function setup() {
   try {
     //Fetch Data from API Instead of  Episodes.json file
     const response = await fetch("https://api.tvmaze.com/shows/82/episodes");
-    
+
     /*simulate an error to test Displaying Error Message
     const response = await fetch("https://api.tvmaze.com/shows/82/epiiiiiiisodes");*/
 
@@ -24,7 +24,7 @@ async function setup() {
   //clear Loading Message
   loadingMessage.style.display = "none";
   if (allEpisodes.length === 0) {
-    // If there is an error and there isn't any data to display
+    // No data available — exit setup
     return;
   }
   //Add Select Items
