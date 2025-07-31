@@ -3,6 +3,7 @@ async function setup() {
   //const allEpisodes = getAllEpisodes();
   //Display a message while loading Data
   const loadingMessage = document.getElementById("loadingMessage");
+  loadingMessage.textContent = "Please Wait! Loading Data .............";
   loadingMessage.style.display = "block";
   let allEpisodes = [];
   try {
