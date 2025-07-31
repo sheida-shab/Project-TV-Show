@@ -1,7 +1,18 @@
 //You can edit ALL of the code here
-function setup() {
-  const allEpisodes = getAllEpisodes();
+async function setup() {
+  //const allEpisodes = getAllEpisodes();
+  //Display a message while loading Data
+  const loadingMessage = document.getElementById("loadingMessage");
+  loadingMessage.style.display = "block";
+
+  //Fetch Data from API Instead of  Episodes.json file
+  const response = await fetch("https://api.tvmaze.com/shows/82/episodes");
+  const allEpisodes = await response.json();
   displayEpisodes(allEpisodes);
+  
+  //clear Loading Message
+  loadingMessage.style.display = "none";
+
   //Add Select Items
   const episodeSelector = document.getElementById("selectEpisode");
   const allOptions = document.createElement("option");
