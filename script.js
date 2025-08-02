@@ -35,7 +35,8 @@ async function setup() {
 
   //Add Select Items for shows
   const showSelector = document.createElement("select");
-  document.body.insertBefore(showSelector, rootElem);
+  showSelector.id = "selectShow";
+  document.body.insertBefore(showSelector, document.getElementById("selectEpisode"));
 
 
   //Add Select Items for episodes
