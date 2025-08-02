@@ -15,6 +15,27 @@ async function setup() {
     const response = await fetch*/
 
     const allShows = await showResponse.json();
+
+    function populateShowMenu(showList) {
+      showSelector.innerHTML = "";
+      const defaultOption = document.createElement("option");
+      defaultOption.textContent = "Select a Show";
+      defaultOption.value = "";
+      showSelector.appendChild(defaultOption);
+
+      showList.forEach((show) => {
+        const option = document.createElement("option");
+        option.value = show.id;
+        option.textContent = show.name;
+        showSelector.appendChild(option);
+
+      });
+    }
+
+    populateShowDropdown(allShows);
+
+
+
     const allEpisodes = await episodesResponse.json();
 
 
