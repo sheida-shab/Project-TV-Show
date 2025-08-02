@@ -4,15 +4,20 @@ async function setup() {
   const loadingMessage = document.getElementById("loadingMessage");
   loadingMessage.textContent = "Please Wait! Loading Data .............";
   loadingMessage.style.display = "block";
-  let allEpisodes = [];
   try {
-    //Fetch Data from API Instead of  Episodes.json file
-    const response = await fetch("https://api.tvmaze.com/shows/82/episodes");
+    //Fetch shows and episodes Data 
+    const [showResponse, episodesResponse] = await Promise.all([
+      fetch("https://api.tvmaze.com/shows"),
+      fetch("https://api.tvmaze.com/shows/82/episodes"),
+    ]);
 
     /*simulate an error to test Displaying Error Message
-    const response = await fetch("https://api.tvmaze.com/shows/82/epiiiiiiisodes");*/
+    const response = await fetch*/
 
-    allEpisodes = await response.json();
+    const allShows = await showResponse.json();
+    const allEpisodes = await episodesResponse.json();
+
+
     displayEpisodes(allEpisodes);
   } catch (error) {
     const errorMessage = document.getElementById("errorMessage");
