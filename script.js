@@ -28,7 +28,12 @@ async function setup() {
     return;
   }
 
-  //Add Select Items
+  //Add Select Items for shows
+  const showSelector = document.createElement("select");
+  document.body.insertBefore(showSelector, rootElem);
+
+
+  //Add Select Items for episodes
   const episodeSelector = document.getElementById("selectEpisode");
   const allOptions = document.createElement("option");
   allOptions.textContent = "Show All Episodes";
