@@ -1,6 +1,5 @@
 //You can edit ALL of the code here
 let allEpisodes = [];
-let resultCount;
 const episodeCache = new Map();
 let episodeSelector;
 let showSelector;
@@ -8,7 +7,7 @@ let searchBox;
 let loadingMessage;
 let errorMessage;
 async function setup() {
-  resultCount = document.getElementById("resultCount");
+  
    episodeSelector = document.getElementById("selectEpisode");
    showSelector = document.getElementById("selectShow");
    searchBox = document.getElementById("searchInput");
@@ -53,14 +52,7 @@ async function setup() {
   allOptions.value = "All";
   episodeSelector.insertBefore(allOptions, episodeSelector.firstChild);
   populateEpisodeSelector(allEpisodes);
-  // allEpisodes.forEach((episode) => {
-  //   const episodeCode = formatEpisodeCode(episode.season, episode.number);
-  //   const selectorDisplayText = episodeCode + " - " + episode.name;
-  //   const episodeOption = document.createElement("option");
-  //   episodeOption.textContent = selectorDisplayText;
-  //   episodeOption.value = episode.id;
-  //   episodeSelector.appendChild(episodeOption);
-  // });
+
   episodeSelector.addEventListener("change", (event) => {
     const selectedValue = event.target.value;
     if (selectedValue === "All") {
@@ -93,9 +85,11 @@ async function setup() {
 
     if (showSelectedId === "All") {
       allEpisodes = episodeCache.get("82");
+      searchBox.textContent=""
+      episodeSelector.innerHTML = "";
       populateEpisodeSelector(allEpisodes);
       displayEpisodes(allEpisodes);
-      searchBar.value = "";
+      searchBox.value = "";
       episodeCountDisplay.textContent = `Displaying ${allEpisodes.length}/${allEpisodes.length} episodes.`;
       return;
     }
@@ -104,10 +98,11 @@ async function setup() {
     if (episodeCache.has(showSelectedId)) {
       const cachedEpisode = episodeCache.get(showSelectedId);
       allEpisodes = cachedEpisode;
+      episodeSelector.innerHTML = "";
       populateEpisodeSelector(allEpisodes);
       displayEpisodes(allEpisodes);
-      searchBar.value = "";
-      resultCount.textContent = `Displaying ${allEpisodes.length}/${allEpisodes.length} episodes.`;
+      searchBox.value = "";
+      
     } else {
       try {
         loadingMessage.textContent = "Loading episodes, please wait...";
@@ -120,10 +115,11 @@ async function setup() {
         //save episodes in cache
         episodeCache.set(showSelectedId, data);
         allEpisodes = data;
+        episodeSelector.innerHTML = "";
         populateEpisodeSelector(allEpisodes);
         displayEpisodes(allEpisodes);
-        searchBar.value = "";
-        resultCount.textContent = `Displaying ${allEpisodes.length}/${allEpisodes.length} episodes.`;
+        searchBox.value = "";
+        
         loadingMessage.textContent = "";
       } catch (error) {
         errorMessage.textContent =
@@ -220,7 +216,7 @@ function displayEpisodes(episodeList) {
     rootElem.appendChild(episodeCard);
   });
   //Display Result Count
-  //resultCount = document.getElementById("resultCount");
+  const resultCount = document.getElementById("resultCount");
   resultCount.textContent = `Showing ${episodeList.length} Episodes`;
 }
 async function fetchAllShows() {
