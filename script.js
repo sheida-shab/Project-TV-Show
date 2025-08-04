@@ -1,11 +1,16 @@
 //You can edit ALL of the code here
 async function setup() {
+  //Add Select Items for shows
+  const showSelector = document.createElement("select");
+  showSelector.id = "selectShow";
+  document.body.insertBefore(showSelector,document.getElementById("selectEpisode"));
+
   //Display a message while loading Data
   const loadingMessage = document.getElementById("loadingMessage");
   loadingMessage.textContent = "Please Wait! Loading Data .............";
   loadingMessage.style.display = "block";
   try {
-    //Fetch shows and episodes Data 
+    //Fetch shows and episodes Data
     const [showResponse, episodesResponse] = await Promise.all([
       fetch("https://api.tvmaze.com/shows"),
       fetch("https://api.tvmaze.com/shows/82/episodes"),
@@ -16,7 +21,7 @@ async function setup() {
 
     const allShows = await showResponse.json();
 
-    function populateShowMenu(showList) {
+    function populateShowDropdown(showList) {
       showSelector.innerHTML = "";
       const defaultOption = document.createElement("option");
       defaultOption.textContent = "Select a Show";
@@ -28,16 +33,12 @@ async function setup() {
         option.value = show.id;
         option.textContent = show.name;
         showSelector.appendChild(option);
-
       });
     }
 
     populateShowDropdown(allShows);
 
-
-
     const allEpisodes = await episodesResponse.json();
-
 
     displayEpisodes(allEpisodes);
   } catch (error) {
@@ -53,12 +54,6 @@ async function setup() {
     // No data available — exit setup
     return;
   }
-
-  //Add Select Items for shows
-  const showSelector = document.createElement("select");
-  showSelector.id = "selectShow";
-  document.body.insertBefore(showSelector, document.getElementById("selectEpisode"));
-
 
   //Add Select Items for episodes
   const episodeSelector = document.getElementById("selectEpisode");
