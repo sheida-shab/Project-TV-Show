@@ -1,5 +1,6 @@
 //You can edit ALL of the code here
 
+const episodesCache = {};
 let allEpisodes = [];
 
 
@@ -59,13 +60,20 @@ searchItemsContainer.insertBefore(showSelector, document.getElementById("selectE
       loadingMessage.style.display = "block";
       errorMessage.style.display = "none";
 
+      if (episodesCache[selectedShowId]) {
+        allEpisodes = episodesCache[selectedShowId];
+        displayEpisodes(allEpisodes);
+        populateEpisodeDropdown(allEpisodes);
+        loadingMessage.style.display = "none";
+      }
+
       try {
-        const res = await fetch(
-          `https://api.tvmaze.com/shows/${selectedShowId}/episodes`
-        );
+        const res = await fetch(`https://api.tvmaze.com/shows/${selectedShowId}/episodes`);
         if (!res.ok) throw new Error();
 
         allEpisodes = await res.json();
+        episodesCache[selectedShowId] = allEpisodes;
+
         displayEpisodes(allEpisodes);
         populateEpisodeDropdown(allEpisodes);
       } catch (error) {
