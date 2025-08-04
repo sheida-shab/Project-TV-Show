@@ -1,9 +1,18 @@
 //You can edit ALL of the code here
+
+let allEpisodes = [];
+
+
 async function setup() {
+
+  const episodeSelector = document.getElementById("selectEpisode");
+
   //Add Select Items for shows
   const showSelector = document.createElement("select");
   showSelector.id = "selectShow";
-  document.body.insertBefore(showSelector,document.getElementById("selectEpisode"));
+const searchItemsContainer = document.getElementById("searchItems");
+searchItemsContainer.insertBefore(showSelector, document.getElementById("selectEpisode"));
+
 
   //Display a message while loading Data
   const loadingMessage = document.getElementById("loadingMessage");
@@ -38,7 +47,35 @@ async function setup() {
 
     populateShowDropdown(allShows);
 
-    const allEpisodes = await episodesResponse.json();
+    const errorMessage = document.getElementById("errorMessage");
+
+    showSelector.addEventListener("change", async (event) => {
+      const selectedShowId = event.target.value;
+      if (!selectedShowId) return;
+
+      loadingMessage.textContent = "Loading episodes for selected show...";
+      loadingMessage.style.display = "block";
+      errorMessage.style.display = "none";
+
+      try {
+        const res = await fetch(
+          `https://api.tvmaze.com/shows/${selectedShowId}/episodes`
+        );
+        if (!res.ok) throw new Error();
+
+        allEpisodes = await res.json();
+        displayEpisodes(allEpisodes);
+        populateEpisodeDropdown(allEpisodes);
+      } catch (error) {
+        errorMessage.textContent = "Could not load episodes for this show.";
+        errorMessage.style.display = "block";
+      }
+
+      loadingMessage.style.display = "none";
+    });
+
+
+    allEpisodes = await episodesResponse.json();
 
     displayEpisodes(allEpisodes);
   } catch (error) {
@@ -55,21 +92,9 @@ async function setup() {
     return;
   }
 
-  //Add Select Items for episodes
-  const episodeSelector = document.getElementById("selectEpisode");
-  const allOptions = document.createElement("option");
-  allOptions.textContent = "Show All Episodes";
-  allOptions.value = "All";
-  episodeSelector.insertBefore(allOptions, episodeSelector.firstChild);
+  populateEpisodeDropdown(allEpisodes);
 
-  allEpisodes.forEach((episode) => {
-    const episodeCode = formatEpisodeCode(episode.season, episode.number);
-    const selectorDisplayText = episodeCode + " - " + episode.name;
-    const episodeOption = document.createElement("option");
-    episodeOption.textContent = selectorDisplayText;
-    episodeOption.value = episode.id;
-    episodeSelector.appendChild(episodeOption);
-  });
+
   episodeSelector.addEventListener("change", (event) => {
     const selectedValue = event.target.value;
     if (selectedValue === "All") {
@@ -155,5 +180,27 @@ function displayEpisodes(episodeList) {
   const resultCount = document.getElementById("resultCount");
   resultCount.textContent = `Showing ${episodeList.length} Episodes`;
 }
+
+
+function populateEpisodeDropdown(episodes) {
+  const episodeSelector = document.getElementById("selectEpisode");
+  episodeSelector.innerHTML = "";
+  const allOptions = document.createElement("option");
+  allOptions.textContent = "Show All Episodes";
+  allOptions.value = "All";
+  episodeSelector.appendChild(allOptions);
+
+  episodes.forEach((episode) => {
+    const episodeCode = formatEpisodeCode(episode.season, episode.number);
+    const selectorDisplayText = `${episodeCode} - ${episode.name}`;
+    const episodeOption = document.createElement("option");
+    episodeOption.textContent = selectorDisplayText;
+    episodeOption.value = episode.id;
+    episodeSelector.appendChild(episodeOption);
+  });
+}
+
+
+
 
 window.onload = setup;
