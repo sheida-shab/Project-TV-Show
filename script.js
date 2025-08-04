@@ -11,14 +11,15 @@ async function setup() {
   //Add Select Items for shows
   const showSelector = document.createElement("select");
   showSelector.id = "selectShow";
-const searchItemsContainer = document.getElementById("searchItems");
-searchItemsContainer.insertBefore(showSelector, document.getElementById("selectEpisode"));
+  const searchItemsContainer = document.getElementById("searchItems");
+  searchItemsContainer.insertBefore(showSelector, document.getElementById("selectEpisode"));
 
 
   //Display a message while loading Data
   const loadingMessage = document.getElementById("loadingMessage");
   loadingMessage.textContent = "Please Wait! Loading Data .............";
   loadingMessage.style.display = "block";
+  
   try {
     //Fetch shows and episodes Data
     const [showResponse, episodesResponse] = await Promise.all([
@@ -65,6 +66,7 @@ searchItemsContainer.insertBefore(showSelector, document.getElementById("selectE
         displayEpisodes(allEpisodes);
         populateEpisodeDropdown(allEpisodes);
         loadingMessage.style.display = "none";
+        return; 
       }
 
       try {
@@ -90,8 +92,7 @@ searchItemsContainer.insertBefore(showSelector, document.getElementById("selectE
     displayEpisodes(allEpisodes);
   } catch (error) {
     const errorMessage = document.getElementById("errorMessage");
-    errorMessage.textContent =
-      "An error occurred while fetching data!!!Please Try Again. ";
+    errorMessage.textContent = "An error occurred while fetching data!!!Please Try Again. ";
     errorMessage.style.display = "block";
   }
 
