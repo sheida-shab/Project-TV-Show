@@ -30,6 +30,8 @@ searchItemsContainer.insertBefore(showSelector, document.getElementById("selectE
 
     const allShows = await showResponse.json();
 
+    allShows.sort((a, b) => a.name.toLowerCase().localeCompare(b.name.toLowerCase()));
+
     function populateShowDropdown(showList) {
       showSelector.innerHTML = "";
       const defaultOption = document.createElement("option");
