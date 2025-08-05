@@ -184,35 +184,35 @@ function displayEpisodes(episodeList) {
     const episodeCard = document.createElement("div");
     episodeCard.classList.add("episode-Card");
 
-    //create show title
-    const showTitle = document.createElement("h2");
-    showTitle.textContent = `${episode.name} - ${formatEpisodeCode(
+    //create episode title
+    const episodeTitle = document.createElement("h2");
+    episodeTitle.textContent = `${episode.name} - ${formatEpisodeCode(
       episode.season,
       episode.number
     )}`;
-    episodeCard.appendChild(showTitle);
-    showTitle.classList.add("show-Title");
+    episodeCard.appendChild(episodeTitle);
+    episodeTitle.classList.add("episode-Title");
 
-    //create show image
-    const showImage = document.createElement("img");
-    showImage.src = episode.image.medium;
-    showImage.alt = "TV Show Image";
-    episodeCard.appendChild(showImage);
-    showImage.classList.add("show-Image");
+    //create episode image
+    const episodeImage = document.createElement("img");
+    episodeImage.src = episode.image.medium;
+    episodeImage.alt = "TV Show Image";
+    episodeCard.appendChild(episodeImage);
+    episodeImage.classList.add("episode-Image");
 
-    //create show summary
-    const showSummary = document.createElement("div");
-    showSummary.innerHTML = `<strong>The summary is : </strong>${episode.summary}`;
-    episodeCard.appendChild(showSummary);
-    showSummary.classList.add("show-Summary");
+    //create episode summary
+    const episodeSummary = document.createElement("div");
+    episodeSummary.innerHTML = `<strong>The summary is : </strong>${episode.summary}`;
+    episodeCard.appendChild(episodeSummary);
+    episodeSummary.classList.add("Episode-Summary");
 
-    //create show original link
-    const showLink = document.createElement("a");
-    showLink.textContent = `for mre information visit "tvmaze.com"`;
-    showLink.target = "_blank";
-    showLink.href = episode.url;
-    showLink.classList.add("show-Link");
-    episodeCard.appendChild(showLink);
+    //create episode original link
+    const episodeLink = document.createElement("a");
+    episodeLink.textContent = `for mre information visit "tvmaze.com"`;
+    episodeLink.target = "_blank";
+    episodeLink.href = episode.url;
+    episodeLink.classList.add("show-Link");
+    episodeCard.appendChild(episodeLink);
     rootElem.appendChild(episodeCard);
   });
   //Display Result Count
@@ -244,5 +244,34 @@ async function fetchAllShows() {
     errorMessage.textContent = "Failed to load shows. Please refresh.";
     return [];
   }
+}
+function createShowPage(show){
+  const showCard=document.createElement("div");
+  showCard.classList.add("show-card");
+
+  const showTitle=document.createElement("h2");
+  showTitle.textContent=show.name;
+  
+  const showImage=document.createElement("img");
+  showImage.src = show.image.medium;
+  showImage.alt = `${show.name} Image`;
+
+   const showSummary = document.createElement("div");
+   showSummary.innerHTML = `<strong> Summary : </strong>${show.summary}`;
+   showSummary.classList.add("Show-Summary");
+
+   const showDetails=document.createElement("p");
+   showDetails.innerHTML = `
+   <strong>Genres : </strong> S{show.genres.join(", ")}<br/>
+   <strong> Rated : </strong> ${show.rating}<br/>
+   <strong> Status : </strong> ${show.status}<br/>
+   <strong> Runtime : </strong> ${show.runtime} min
+   `;
+
+   showCard.appendChild(showTitle);
+   showCard.appendChild(showImage);
+   showCard.appendChild(showSummary);
+   showCard.appendChild(showDetails);
+   
 }
 window.onload = setup;
