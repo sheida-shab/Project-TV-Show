@@ -79,6 +79,7 @@ async function setup() {
     a.name.toLowerCase().localeCompare(b.name.toLowerCase())
   );
   populateShowSelector(allShows);
+  displayShowCards(allShows); 
   
   showSelector.addEventListener("change", async (event) => {
     const showSelectedId = event.target.value;
@@ -245,7 +246,7 @@ async function fetchAllShows() {
     return [];
   }
 }
-function createShowPage(show){
+function createShowCard(show){
   const showCard=document.createElement("div");
   showCard.classList.add("show-card");
 
@@ -272,6 +273,16 @@ function createShowPage(show){
    showCard.appendChild(showImage);
    showCard.appendChild(showSummary);
    showCard.appendChild(showDetails);
+   return showCard;
    
+}
+
+function displayShowCards(shows){
+  const showsView = document.getElementById("showsView");
+  showsView.innerHTML="";
+  shows.forEach(show =>{
+    const showCard=createShowCard(show);
+    showsView.appendChild(showCard);
+  });
 }
 window.onload = setup;
