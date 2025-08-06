@@ -82,7 +82,6 @@ async function setup() {
   populateShowSelector(allShows);
   displayShowCards(allShows);
 
-
   showSelector.addEventListener("change", async (event) => {
     const showSelectedId = event.target.value;
 
@@ -279,20 +278,25 @@ function displayShowCards(shows) {
   showsView = document.getElementById("showsView");
   showsView.innerHTML = "";
   shows.forEach((show) => {
-    const showCard = createShowCard(show);
-    showsView.appendChild(showCard);
+  const showCard = createShowCard(show);
+  showCard.addEventListener("click", () =>
+    DisplayEpisodesAfterShowClick(show.id)
+  );
+  showsView.appendChild(showCard);
   });
+  
 }
 
 async function DisplayEpisodesAfterShowClick(showId) {
-  
-  if (episodeCache.has(showId)){
-    allEpisodes=episodeCache.get(showId);
-  }else{
-    const response= await fetch(`https://api.tvmaze.com/shows/${showId}/episodes`);
-    const data=response.json();
-    episodeCache.set(showId,data);
-    allEpisodes=data;
+  if (episodeCache.has(showId)) {
+    allEpisodes = episodeCache.get(showId);
+  } else {
+    const response = await fetch(
+      `https://api.tvmaze.com/shows/${showId}/episodes`
+    );
+    const data =await  response.json();
+    episodeCache.set(showId, data);
+    allEpisodes = data;
   }
 
   episodeSelector.innerHTML = "";
