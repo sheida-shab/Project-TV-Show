@@ -262,7 +262,7 @@ function createShowCard(show) {
   const showDetails = document.createElement("p");
   showDetails.innerHTML = `
    <strong>Genres : </strong> S{show.genres.join(", ")}<br/>
-   <strong> Rated : </strong> ${show.rating}<br/>
+   <strong> Rated : </strong> ${show.rating.average}<br/>
    <strong> Status : </strong> ${show.status}<br/>
    <strong> Runtime : </strong> ${show.runtime} min
    `;
