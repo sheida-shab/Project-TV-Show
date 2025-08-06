@@ -8,7 +8,9 @@ let loadingMessage;
 let errorMessage;
 let showsView;
 let episodesView;
+let allShows;
 async function setup() {
+  showsView = document.getElementById("showsView"); 
   episodesView = document.getElementById("episodesView");
   episodeSelector = document.getElementById("selectEpisode");
   showSelector = document.getElementById("selectShow");
@@ -19,6 +21,8 @@ async function setup() {
   loadingMessage.textContent = "Please Wait! Loading Data .............";
   loadingMessage.style.display = "block";
 
+    const backButton = document.getElementById("backToShows");
+    backButton.addEventListener("click", () => buttonBackClick());
   try {
     //Fetch Data from API Instead of  Episodes.json file
     const response = await fetch("https://api.tvmaze.com/shows/82/episodes");
@@ -75,8 +79,8 @@ async function setup() {
   showAllOptions.textContent = "All Shows";
   showAllOptions.value = "All";
   showSelector.insertBefore(showAllOptions, showSelector.firstChild);
-  const allShows = await fetchAllShows();
-  allShows.sort((a, b) =>
+  allShows = await fetchAllShows();
+    allShows.sort((a, b) =>
     a.name.toLowerCase().localeCompare(b.name.toLowerCase())
   );
   populateShowSelector(allShows);
@@ -142,7 +146,9 @@ async function setup() {
     });
     displayEpisodes(filteredEpisodes);
   });
+  
 }
+
 
 //create show season and episode number
 function formatEpisodeCode(season, number) {
@@ -252,7 +258,11 @@ function createShowCard(show) {
   showTitle.textContent = show.name;
 
   const showImage = document.createElement("img");
-  showImage.src = show.image.medium;
+  if (show.image && show.image.medium) {
+    showImage.src = show.image.medium;
+  } else {
+    showImage.src = "";
+  }
   showImage.alt = `${show.name} Image`;
 
   const showSummary = document.createElement("div");
@@ -261,10 +271,14 @@ function createShowCard(show) {
 
   const showDetails = document.createElement("p");
   showDetails.innerHTML = `
-   <strong>Genres : </strong> S{show.genres.join(", ")}<br/>
-   <strong> Rated : </strong> ${show.rating.average}<br/>
-   <strong> Status : </strong> ${show.status}<br/>
-   <strong> Runtime : </strong> ${show.runtime} min
+   <strong>Genres : </strong> ${
+     show.genres ? show.genres.join(", ") : "N/A"
+   }<br/>
+   <strong> Rated : </strong> ${
+     show.rating && show.rating.average ? show.rating.average : "N/A"
+   }<br/>
+   <strong> Status : </strong> ${show.status || "N/A"}<br/>
+   <strong> Runtime : </strong> ${show.runtime ? show.runtime + " min" : "N/A"}
    `;
 
   showCard.appendChild(showTitle);
@@ -306,6 +320,14 @@ async function DisplayEpisodesAfterShowClick(showId) {
 
   showsView.style.display = "none";
   episodesView.style.display = "block";
+}
+
+function buttonBackClick(){
+  showsView.style.display = "block";
+  episodesView.style.display = "none";
+  showsView.classList.add("grid-view");
+  showsView.style.display = "grid"; 
+  displayShowCards(allShows);
 }
 
 window.onload = setup;
