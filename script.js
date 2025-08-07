@@ -10,6 +10,7 @@ let showsView;
 let episodesView;
 let allShows;
 let searchShowInput;
+let showResultCount;
 async function setup() {
   showsView = document.getElementById("showsView");
   episodesView = document.getElementById("episodesView");
@@ -18,6 +19,7 @@ async function setup() {
   searchBox = document.getElementById("searchInput");
   errorMessage = document.getElementById("errorMessage");
   searchShowInput = document.getElementById("searchShowInput");
+  showResultCount = document.getElementById("showResultCount");
   //Display a message while loading Data
   loadingMessage = document.getElementById("loadingMessage");
   loadingMessage.textContent = "Please Wait! Loading Data .............";
@@ -239,7 +241,7 @@ function displayEpisodes(episodeList) {
   });
   //Display Result Count
   const resultCount = document.getElementById("resultCount");
-  resultCount.textContent = `Showing ${episodeList.length} Episodes`;
+  resultCount.textContent = `Displaying ${episodeList.length} Episodes`;
 }
 async function fetchAllShows() {
   let pageNumber = 0;
@@ -309,13 +311,14 @@ function displayShowCards(shows) {
   showsView = document.getElementById("showsView");
   showsView.innerHTML = "";
   shows.forEach((show) => {
-  const showCard = createShowCard(show);
-  showCard.addEventListener("click", () =>
-    DisplayEpisodesAfterShowClick(show.id)
-  );
-  showsView.appendChild(showCard);
+    const showCard = createShowCard(show);
+    showCard.addEventListener("click", () =>
+      DisplayEpisodesAfterShowClick(show.id)
+    );
+    showsView.appendChild(showCard);
   });
-  
+  //Display Result Count
+    showResultCount.textContent = `Displaying ${shows.length} shows`;
 }
 
 async function DisplayEpisodesAfterShowClick(showId) {
@@ -338,6 +341,7 @@ async function DisplayEpisodesAfterShowClick(showId) {
   showsView.style.display = "none";
   episodesView.style.display = "block";
   searchShowInput.style.display="none";
+  showResultCount.style.display = "none";
 }
 
 function buttonBackClick(){
@@ -346,6 +350,7 @@ function buttonBackClick(){
   showsView.classList.add("grid-view");
   showsView.style.display = "grid"; 
   searchShowInput.style.display="block";
+  showResultCount.style.display = "block";
   displayShowCards(allShows);
 }
 
