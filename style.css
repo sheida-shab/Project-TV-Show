@@ -6,7 +6,7 @@
   grid-template-columns: repeat(4, 1fr);
 }
 
-.show-Title {
+.episode-Title {
   border: 1px solid rgb(175, 156, 156);
   padding: 10px;
   border-radius: 10px;
@@ -18,7 +18,35 @@
   border-radius: 10px;
 }
 
-.show-Summary {
+.episode-Summary {
   color: #000;
  background-color: #f5f5f5;
+}
+
+#showsView {
+  display: grid;
+  grid-template-columns: repeat(5, 1fr);
+  gap: 1rem;
+  padding: 1rem;
+  background-color: #ffffff;
+  color: #000000;
+}
+
+
+.show-card {
+  border: 1px solid #ccc;
+  padding: 10px;
+  border-radius: 10px;
+  background-color: #f5f5f5;
+  transition: transform 0.2s ease;
+}
+
+.show-card:hover {
+  transform: scale(1.02);
+}
+
+.show-card img {
+  width: 100%;
+  height: auto;
+  border-radius: 4px;
 }
