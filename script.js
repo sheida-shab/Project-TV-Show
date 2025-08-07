@@ -318,6 +318,7 @@ function displayShowCards(shows) {
     showsView.appendChild(showCard);
   });
   //Display Result Count
+  
     showResultCount.textContent = `Displaying ${shows.length} shows`;
 }
 
@@ -351,7 +352,7 @@ async function DisplayEpisodesAfterShowClick(showId) {
 function buttonBackClick(){
   showsView.style.display = "block";
   episodesView.style.display = "none";
-  showsView.classList.add("grid-view");
+  //showsView.classList.add("grid-view");
   showsView.style.display = "grid"; 
   searchShowInput.style.display="block";
   searchShowInput.value="";
