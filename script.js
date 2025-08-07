@@ -9,20 +9,22 @@ let errorMessage;
 let showsView;
 let episodesView;
 let allShows;
+let searchShowInput;
 async function setup() {
-  showsView = document.getElementById("showsView"); 
+  showsView = document.getElementById("showsView");
   episodesView = document.getElementById("episodesView");
   episodeSelector = document.getElementById("selectEpisode");
   showSelector = document.getElementById("selectShow");
   searchBox = document.getElementById("searchInput");
   errorMessage = document.getElementById("errorMessage");
+  searchShowInput = document.getElementById("searchShowInput");
   //Display a message while loading Data
   loadingMessage = document.getElementById("loadingMessage");
   loadingMessage.textContent = "Please Wait! Loading Data .............";
   loadingMessage.style.display = "block";
 
-    const backButton = document.getElementById("backToShows");
-    backButton.addEventListener("click", () => buttonBackClick());
+  const backButton = document.getElementById("backToShows");
+  backButton.addEventListener("click", () => buttonBackClick());
   try {
     //Fetch Data from API Instead of  Episodes.json file
     const response = await fetch("https://api.tvmaze.com/shows/82/episodes");
@@ -80,11 +82,27 @@ async function setup() {
   showAllOptions.value = "All";
   showSelector.insertBefore(showAllOptions, showSelector.firstChild);
   allShows = await fetchAllShows();
-    allShows.sort((a, b) =>
+  allShows.sort((a, b) =>
     a.name.toLowerCase().localeCompare(b.name.toLowerCase())
   );
   populateShowSelector(allShows);
   displayShowCards(allShows);
+
+  //Add free-text show search
+  searchShowInput.addEventListener("input", function () {
+    const showSearchValue = searchShowInput.value.toLowerCase();
+    const filteredShows = allShows.filter((show) => {
+      const showName = show.name.toLowerCase();
+      const showGenres = show.genres.join(" ").toLowerCase();
+      const showSummary = show.summary.toLowerCase();
+      return (
+        showName.includes(showSearchValue) ||
+        showGenres.includes(showSearchValue) ||
+        showSummary.includes(showSearchValue)
+      );
+    });
+    displayShowCards(filteredShows);
+  });
 
   showSelector.addEventListener("change", async (event) => {
     const showSelectedId = event.target.value;
@@ -146,7 +164,6 @@ async function setup() {
     });
     displayEpisodes(filteredEpisodes);
   });
-  
 }
 
 
