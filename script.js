@@ -334,6 +334,10 @@ async function DisplayEpisodesAfterShowClick(showId) {
   }
 
   episodeSelector.innerHTML = "";
+  const allOptions = document.createElement("option");
+  allOptions.textContent = "Show All Episodes";
+  allOptions.value = "All";
+  episodeSelector.insertBefore(allOptions, episodeSelector.firstChild);
   populateEpisodeSelector(allEpisodes);
   displayEpisodes(allEpisodes);
   searchBox.value = "";
@@ -350,6 +354,7 @@ function buttonBackClick(){
   showsView.classList.add("grid-view");
   showsView.style.display = "grid"; 
   searchShowInput.style.display="block";
+  searchShowInput.value="";
   showResultCount.style.display = "block";
   displayShowCards(allShows);
 }
