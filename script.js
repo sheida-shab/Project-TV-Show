@@ -2,7 +2,7 @@
 let allEpisodes = [];
 const episodeCache = new Map();
 let episodeSelector;
-let showSelector;
+//let showSelector;
 let searchBox;
 let loadingMessage;
 let errorMessage;
