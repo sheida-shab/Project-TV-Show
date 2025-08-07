@@ -337,6 +337,7 @@ async function DisplayEpisodesAfterShowClick(showId) {
 
   showsView.style.display = "none";
   episodesView.style.display = "block";
+  searchShowInput.style.display="none";
 }
 
 function buttonBackClick(){
@@ -344,6 +345,7 @@ function buttonBackClick(){
   episodesView.style.display = "none";
   showsView.classList.add("grid-view");
   showsView.style.display = "grid"; 
+  searchShowInput.style.display="block";
   displayShowCards(allShows);
 }
 
