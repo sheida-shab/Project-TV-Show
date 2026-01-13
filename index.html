@@ -9,22 +9,39 @@
   </head>
 
   <body>
-    <div
-      id="loadingMessage"
-      style="font-size: 1.5em; font-weight: bold; display: none"
-    ></div>
-    <div id="errorMessage" style="color: red; display: none"></div>
-    <div id="searchItems">
-      <select id="selectEpisode"></select>
-      <input
-        type="text"
-        id="searchInput"
-        placeholder="Search episodes..."
-        style="margin: 20px; padding: 10px; width: 300px"
-      />
-      <p id="resultCount" style="display: inline-block"></p>
+    <input
+      type="text"
+      id="searchShowInput"
+      placeholder="Search shows by name, genre, summary..."
+      style="padding: 10px; width: 300px; margin-bottom: 10px"
+    />
+    <p id="showResultCount" style="display: inline-block"></p>
+    <div id="showsView">
+      
+      </div>
     </div>
-    <div id="root"></div>
+
+    <div id="episodesView" style="display: none">
+      <div
+        id="loadingMessage"
+        style="font-size: 1.5em; font-weight: bold; display: none"
+      ></div>
+      <div id="errorMessage" style="color: red; display: none"></div>
+      <div id="searchItems">
+        <select id="selectShow" style="display: none" ></select>
+        <select id="selectEpisode"></select>
+
+        <input
+          type="text"
+          id="searchInput"
+          placeholder="Search episodes..."
+          style="margin: 20px; padding: 10px; width: 300px"
+        />
+        <p id="resultCount" style="display: inline-block"></p>
+      </div>
+      <button id="backToShows">⬅ Back to Shows</button>
+      <div id="root"></div>
+    </div>
 
     <!-- Loads YOUR javascript code -->
     <script src="script.js"></script>
